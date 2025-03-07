@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './src/home';
+import Cart from './src/cart';
+import WelcomeScreen from './src/welcome';
+import { CartProvider } from './src/CartContext';
+import { AddedItemsProvider } from './src/AddedItemsContext';
+import CheckOut from './src/checkOut'
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <CartProvider>
+      <AddedItemsProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Cart" component={Cart} />
+            <Stack.Screen name="CheckOut" component={CheckOut} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AddedItemsProvider>
+    </CartProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
